@@ -24,37 +24,76 @@
     </div>
 
     <script>
-        const formulario = document.getElementById("meuFormulario");
-        const mensagem = document.getElementById("mensagem");
+	formulario.addEventListener("submit", async (e) => {
+	  e.preventDefault();
+	  
+	  const dados = {
+		nome: formulario.nome.value,
+		email: formulario.email.value
+	  };
 
-        formulario.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            
-            const dados = {
-                nome: formulario.nome.value,
-                email: formulario.email.value
-            };
+	  try {
+		const resposta = await fetch(
+		  "formulario.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const dados = {
+    nome: formulario.nome.value,
+    email: formulario.email.value
+  };
 
-            try {			
-				const resposta = await fetch(
-                    "https://script.google.com/macros/s/AKfycbzC-KPSDBgI9YTLkoIWW06spm77wIZg5sDC4i1TsPC4xFPfG3omOScPhIUkvudxsG0PsA/exec",
-				  {
-					method: "POST",
-					headers: {
-					  "Content-Type": "application/json",
-					},
-					body: JSON.stringify(dados),
-					mode: "no-cors" // ⚠️ Só use isso se o CORS persistir (não ideal)
-				  }
-				);
-                
-                const resultado = await resposta.text();
-                mensagem.innerHTML = `<div class="alert alert-success">${resultado}</div>`;
-                formulario.reset();
-            } catch (erro) {
-                mensagem.innerHTML = `<div class="alert alert-danger">Erro ao enviar: ${erro.message}</div>`;
-            }
-        });
+  try {
+    const resposta = await fetch(
+      "https://script.google.com/macros/s/AKfycbysSpPK0MHsoTa0K4Ys-xxHlVytnK_aNSv-8UlJmTxhAgkJXD16h6mLAXDl8tDRMPzStw/exec",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dados)
+      }
+    );
+    
+    const resultado = await resposta.json();
+    
+    if (resultado.result === "success") {
+      mensagem.innerHTML = `<div class="alert alert-success">Dados salvos com sucesso!</div>`;
+      formulario.reset();
+    } else {
+      mensagem.innerHTML = `<div class="alert alert-danger">Erro: ${resultado.message}</div>`;
+    }
+    
+  } catch (erro) {
+    mensagem.innerHTML = `<div class="alert alert-danger">Erro de conexão: ${erro.message}</div>`;
+  }
+});",
+		  {
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json",
+			},
+			body: JSON.stringify(dados)
+		  }
+		);
+		
+		const resultado = await resposta.json();
+		
+		if (resultado.result === "success") {
+		  mensagem.innerHTML = `<div class="alert alert-success">Dados salvos com sucesso!</div>`;
+		  formulario.reset();
+		} else {
+		  mensagem.innerHTML = `<div class="alert alert-danger">Erro: ${resultado.message}</div>`;
+		}
+		
+	  } catch (erro) {
+		mensagem.innerHTML = `<div class="alert alert-danger">Erro de conexão: ${erro.message}</div>`;
+	  }
+	});
     </script>
+	
+
+
+
+
 </body>
 </html>
